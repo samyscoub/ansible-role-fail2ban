@@ -11,6 +11,18 @@ maxretry = {{ fail2ban_config_maxretry }}
 # jail.{conf,local} configuration files.
 destemail = {{ fail2ban_config_destemail }}
 
+banaction = iptables-multiport
+mta = sendmail
+protocol = tcp
+chain = INPUT
+action_ = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
+action_mw = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
+        %(mta)s-whois[name=%(__name__)s, dest="%(destemail)s", protocol="%(protocol)s", chain="%(chain)s"]
+action_mwl = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
+        %(mta)s-whois-lines[name=%(__name__)s, dest="%(destemail)s", logpath=%(logpath)s, chain="%(chain)s"]
+action = {{ fail2ban_config_default_action }}
+
+
 #
 # JAILS
 #
