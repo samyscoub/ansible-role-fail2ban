@@ -17,3 +17,6 @@ fail2ban_config_destemail: root@localhost
 # Jails
 fail2ban_config_jail_ssh_enabled: yes
 fail2ban_config_jail_sshddos_enabled: yes
+
+# Defaults action
+fail2ban_config_default_action = %(action_mwl)s
